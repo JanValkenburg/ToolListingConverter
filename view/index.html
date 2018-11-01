@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        body {
+            overflow: hidden;
+            font-size: 11px;
+            font-family: Arial, serif;
+        }
+
+        .flex-row {
+            clear: both;
+            display: flex;
+            flex-flow: row wrap;
+            position: relative;
+        }
+
+        .flex-row .flex-cell {
+            flex: 1 50%;
+            position: relative;
+            padding: 1rem;
+        }
+
+
+        .heading {
+            line-height: 40px;
+        }
+        .heading strong {
+            font-size: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: calc(100vh - 90px);
+            resize: none;
+            font-size: 11px;
+            font-family: Arial, serif;
+            padding: .25rem;
+            border: 1px solid black;
+        }
+
+        button {
+            line-height: 32px;
+            padding: 0 .5rem;
+            background: silver;
+            border-radius: 5px;
+        }
+
+        button {
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: .375rem .75rem;
+            line-height: 1.5;
+            border-radius: .25rem;
+            transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+
+        button {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            color: #fff;
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+
+        .pull-right {
+            float: right;
+        }
+
+        footer {
+            text-align: center;
+            position: fixed;
+            bottom:0;
+            left:0;
+            right:0;
+            line-height: 30px;
+        }
+
+
+        body.dark-mode {
+            background: rgb(60,63,65);
+            color: rgb(164,164,164);
+        }
+        body.dark-mode textarea {
+            background: rgb(43,43,43);
+            color: rgb(164,164,164);
+        }
+    </style>
+</head>
+<body class="dark-mode">
+<div class="flex-row">
+    <div class="flex-cell">
+        <form action="" method="post">
+            <div class="heading">
+                <strong>input</strong>
+
+                <div class="pull-right">
+
+                    <label>
+                        <input type="checkbox"
+                               name="case_sensitive"
+                               {{case_sensitive}}>
+                        case sensitive
+                    </label>
+                    <button name="method" value="random">random</button>
+                    <button name="method" value="sortLength>">Length ></button>
+                    <button name="method" value="sortLength<">Length <</button>
+                    <button name="method" value="shuffle">shuffle</button>
+                    <button name="method" value="count">count</button>
+                    <button name="method" value="duplicates">duplicates</button>
+                    <button name="method" value="unique">unique</button>
+                    <button name="method" value="a-Z">A-z</button>
+                    <button name="method" value="Z-a">z-A</button>
+                </div>
+            </div>
+            <textarea name="content"
+                      cols="30"
+                      rows="10"
+                      placeholder="Copy your items in here. One item per line."
+            >{{input}}</textarea>
+        </form>
+    </div>
+    <div class="flex-cell">
+        <div class="heading">
+            <strong>output</strong>
+        </div>
+        <textarea class="output" readonly>{{output}}</textarea>
+    </div>
+</div>
+<footer>
+    Copyright 2018
+    <a href="https://jv-dezign.com/">JV-Dezign.com</a>
+</footer>
+</body>
+</html>

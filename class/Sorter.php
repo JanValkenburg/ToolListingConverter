@@ -37,6 +37,12 @@ class Sorter
             case 'sortLength>':
                 $output = $this->sortLengthDesc();
                 break;
+            case 'toCamelCase':
+                $output = $this->toCamelCase();
+                break;
+            case 'toSnakeCase':
+                $output = $this->toSnakeCase();
+                break;
             case 'random':
                 $output = $this->random();
                 break;
@@ -53,6 +59,27 @@ class Sorter
             $items = array_map('strtolower', $items);
         }
         $this->items = $items;
+    }
+
+    public function toCamelCase(): array {
+        foreach ($this->items as $k => $item) {
+            if ($item) {
+                $item = ucwords(str_replace('-', ' ', $item));
+                $item = preg_replace("/[\s-]+/", "", $item);
+                $out[] = lcfirst($item);
+            }
+        }      
+        return $out;
+    }
+    
+    public function toSnakeCase(): array {
+        foreach ($this->items as $k => $item) {
+            if ($item) {
+                $item = preg_replace("/[\s-]+/", "_", $item);
+                $out[] = strtolower($item);
+            }
+        }      
+        return $out;
     }
 
     public function sortzA(): array {

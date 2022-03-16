@@ -1,38 +1,50 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vaartland
- * Date: 01/11/2018
- * Time: 16:32
- */
 
-/**
- * Class Sorter
- */
 class Sorter
 {
-    /** @var array  */
     protected $items;
-    /**
-     * @var bool
-     */
     protected $caseSensitive;
 
-    /**
-     * Sorter constructor.
-     * @param string $items
-     * @param bool $caseSensitive
-     */
-    public function __construct($items, bool $caseSensitive)
+    public function __construct(string $items, $caseSensitive)
     {
         $this->caseSensitive = $caseSensitive;
         $this->processInput($items);
     }
 
-    /**
-     * @param string $items
-     */
-    protected function processInput($items): void
+    public function handleSorting(string $sortMethod) {
+        switch ($sortMethod) {
+            case 'Z-a':
+                $output = $this->sortzA();
+                break;
+            case 'a-Z':
+                $output = $this->sortAz();
+                break;
+            case 'unique':
+                $output = $this->unique();
+                break;
+            case 'duplicates':
+                $output = $this->duplicates();
+                break;
+            case 'shuffle':
+                $output = $this->shuffle();
+                break;
+            case 'count':
+                $output = $this->count();
+                break;
+            case 'sortLength<':
+                $output = $this->sortLengthAsc();
+                break;
+            case 'sortLength>':
+                $output = $this->sortLengthDesc();
+                break;
+            case 'random':
+                $output = $this->random();
+                break;
+        }
+        return implode(PHP_EOL, $output);
+    }
+
+    protected function processInput(string $items)
     {
         $items = str_replace(["\r\n", "\n\r", "\r"], "\n", $items);
         $items = explode("\n", $items);
@@ -43,9 +55,6 @@ class Sorter
         $this->items = $items;
     }
 
-    /**
-     * @return array
-     */
     public function sortzA(): array {
         if ($this->caseSensitive) {
             rsort($this->items);
@@ -57,9 +66,6 @@ class Sorter
         return $this->items;
     }
 
-    /**
-     * @return array
-     */
     public function sortAz(): array  {
         if ($this->caseSensitive) {
             sort($this->items);
@@ -70,9 +76,6 @@ class Sorter
         return $this->items;
     }
 
-    /**
-     * @return array
-     */
     public function unique(): array
     {
         $this->items = array_unique($this->items);
@@ -80,9 +83,6 @@ class Sorter
         return $this->items;
     }
 
-    /**
-     * @return array
-     */
     public function random(): array
     {
         shuffle($this->items);
@@ -90,9 +90,6 @@ class Sorter
         return ['0' => $firstItem];
     }
 
-    /**
-     * @return array
-     */
     public function count(): array
     {
         sort($this->items);
@@ -104,18 +101,12 @@ class Sorter
         return $out;
     }
 
-    /**
-     * @return array
-     */
     public function shuffle(): array
     {
         shuffle($this->items);
         return $this->items;
     }
 
-    /**
-     * @return array
-     */
     public function duplicates(): array
     {
         $this->items = array_diff_key($this->items, array_unique($this->items));
@@ -123,9 +114,6 @@ class Sorter
         return $this->items;
     }
 
-    /**
-     * @return array
-     */
     public function sortLengthDesc(): array
     {
         $this->sortLengthAsc();
@@ -133,9 +121,6 @@ class Sorter
         return $this->items;
     }
 
-    /**
-     * @return array
-     */
     public function sortLengthAsc(): array
     {
         usort($this->items, function($a, $b) {

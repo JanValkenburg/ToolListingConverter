@@ -43,6 +43,9 @@ class Sorter
             case 'toSnakeCase':
                 $output = $this->toSnakeCase();
                 break;
+            case 'toKebabCase':
+                $output = $this->toKebabCase();
+                break;
             case 'random':
                 $output = $this->random();
                 break;
@@ -65,17 +68,28 @@ class Sorter
         foreach ($this->items as $k => $item) {
             if ($item) {
                 $item = ucwords(str_replace('-', ' ', $item));
+                $item = str_replace('_', ' ', $item);
                 $item = preg_replace("/[\s-]+/", "", $item);
                 $out[] = lcfirst($item);
             }
         }      
         return $out;
     }
-    
+
     public function toSnakeCase(): array {
         foreach ($this->items as $k => $item) {
             if ($item) {
                 $item = preg_replace("/[\s-]+/", "_", $item);
+                $out[] = strtolower($item);
+            }
+        }      
+        return $out;
+    }
+
+    public function toKebabCase(): array {
+        foreach ($this->items as $k => $item) {
+            if ($item) {
+                $item = preg_replace("/[\s_]+/", "-", $item);
                 $out[] = strtolower($item);
             }
         }      

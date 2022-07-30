@@ -70,6 +70,7 @@ class Sorter
 
     public function toCamelCase(): array
     {
+        $out = [];
         foreach ($this->items as $k => $item) {
             if ($item) {
                 $item = ucwords(str_replace('-', ' ', $item));
@@ -83,6 +84,7 @@ class Sorter
 
     public function toSnakeCase(): array
     {
+        $out = [];
         foreach ($this->items as $k => $item) {
             if ($item) {
                 $item = preg_replace("/[\s-]+/", "_", $item);
@@ -94,6 +96,7 @@ class Sorter
 
     public function toKebabCase(): array
     {
+        $out = [];
         foreach ($this->items as $k => $item) {
             if ($item) {
                 $item = preg_replace("/[\s_]+/", "-", $item);

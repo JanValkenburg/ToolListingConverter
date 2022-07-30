@@ -15,23 +15,10 @@
             text-decoration: none;
         }
         body {
-            overflow: hidden;
             font-size: 11px;
             font-family: Arial, serif;
         }
 
-        .flex-row {
-            clear: both;
-            display: flex;
-            flex-flow: row wrap;
-            position: relative;
-        }
-
-        .flex-row .flex-cell {
-            flex: 1 50%;
-            position: relative;
-            padding: 1rem;
-        }
 
 
         .heading {
@@ -43,7 +30,7 @@
 
         textarea {
             width: 100%;
-            height: calc(100vh - 90px);
+            height:100%;
             resize: none;
             font-size: 11px;
             font-family: Arial, serif;
@@ -77,6 +64,7 @@
             background-color: #007bff;
             border-color: #007bff;
             cursor: pointer;
+            margin-bottom: 0.5rem;
         }
 
         button:hover {
@@ -89,16 +77,6 @@
             float: right;
         }
 
-        footer {
-            text-align: center;
-            position: fixed;
-            bottom:0;
-            left:0;
-            right:0;
-            line-height: 30px;
-        }
-
-
         body.dark-mode {
             background: rgb(60,63,65);
             color: rgb(164,164,164);
@@ -108,16 +86,51 @@
             color: rgb(164,164,164);
         }
     </style>
+
+    <style>
+        .container {
+            display: grid;
+            grid-template-rows: 4rem 1fr 3rem;
+            height: 100vh;
+            padding-inline: 2%;
+        }
+        header {
+            text-align: center;
+            display: grid;
+            place-content: center;
+            color: white;
+
+            font-size: 2rem;
+        }
+        main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        main form div {
+            overflow-y: auto;
+        }
+        form {
+            display: grid;
+            grid-template-rows: 5rem 1fr;
+        }
+        footer {
+            text-align: center;
+            display: grid;
+            place-content: center;
+            color: white;
+        }
+    </style>
 </head>
 <body class="dark-mode">
-<div class="flex-row">
-    <div class="flex-cell">
-        <form action="" method="post">
-            <div class="heading">
-                <strong>input</strong>
 
-                <div class="pull-right">
-
+    <div class="container">
+        <header>
+            <div class="title">Tool: List Converter</div>
+        </header>
+        <main>
+            <form action="" method="post">
+                <div>
                     <button name="method" value="random">random</button>
                     <button name="method" value="sortLength>">Length ></button>
                     <button name="method" value="sortLength<">Length <</button>
@@ -134,30 +147,27 @@
 
                     <label>
                         <input type="checkbox"
-                               name="case_sensitive"
-                               {{case_sensitive}}>
+                                name="case_sensitive"
+                                {{case_sensitive}}>
                         case sensitive
                     </label>
-
                 </div>
+                <textarea name="content"
+                        placeholder="Copy your items in here. One item per line."
+                >{{input}}</textarea>
+            </form>
+
+            <div>
+                <textarea class="output" readonly>{{output}}</textarea>
             </div>
-            <textarea name="content"
-                      cols="30"
-                      rows="10"
-                      placeholder="Copy your items in here. One item per line."
-            >{{input}}</textarea>
-        </form>
+        </main>
+
+        <footer>
+            <div class="copyright">
+                Copyright 2018-2022,
+                <a href="https://jv-dezign.com/">JV-Dezign.com</a>
+            </div>
+        </footer>
     </div>
-    <div class="flex-cell">
-        <div class="heading">
-            <strong>output</strong>
-        </div>
-        <textarea class="output" readonly>{{output}}</textarea>
-    </div>
-</div>
-<footer>
-    Copyright 2018-2022
-    <a href="https://jv-dezign.com/">JV-Dezign.com</a>
-</footer>
 </body>
 </html>

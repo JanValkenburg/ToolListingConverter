@@ -11,7 +11,8 @@ class Sorter
         $this->processInput($items);
     }
 
-    public function handleSorting(string $sortMethod) {
+    public function handleSorting(string $sortMethod)
+    {
         switch ($sortMethod) {
             case 'Z-a':
                 $output = $this->sortzA();
@@ -49,6 +50,9 @@ class Sorter
             case 'random':
                 $output = $this->random();
                 break;
+            case 'flipLR':
+                $output = $this->flipLR();
+                break;
         }
         return implode(PHP_EOL, $output);
     }
@@ -64,7 +68,8 @@ class Sorter
         $this->items = $items;
     }
 
-    public function toCamelCase(): array {
+    public function toCamelCase(): array
+    {
         foreach ($this->items as $k => $item) {
             if ($item) {
                 $item = ucwords(str_replace('-', ' ', $item));
@@ -72,46 +77,48 @@ class Sorter
                 $item = preg_replace("/[\s-]+/", "", $item);
                 $out[] = lcfirst($item);
             }
-        }      
+        }
         return $out;
     }
 
-    public function toSnakeCase(): array {
+    public function toSnakeCase(): array
+    {
         foreach ($this->items as $k => $item) {
             if ($item) {
                 $item = preg_replace("/[\s-]+/", "_", $item);
                 $out[] = strtolower($item);
             }
-        }      
+        }
         return $out;
     }
 
-    public function toKebabCase(): array {
+    public function toKebabCase(): array
+    {
         foreach ($this->items as $k => $item) {
             if ($item) {
                 $item = preg_replace("/[\s_]+/", "-", $item);
                 $out[] = strtolower($item);
             }
-        }      
+        }
         return $out;
     }
 
-    public function sortzA(): array {
+    public function sortzA(): array
+    {
         if ($this->caseSensitive) {
             rsort($this->items);
-        }
-        else {
+        } else {
             natcasesort($this->items);
             $this->items = array_reverse($this->items);
         }
         return $this->items;
     }
 
-    public function sortAz(): array  {
+    public function sortAz(): array
+    {
         if ($this->caseSensitive) {
             sort($this->items);
-        }
-        else {
+        } else {
             natcasesort($this->items);
         }
         return $this->items;
@@ -164,9 +171,19 @@ class Sorter
 
     public function sortLengthAsc(): array
     {
-        usort($this->items, function($a, $b) {
+        usort($this->items, function ($a, $b) {
             return strlen($a) - strlen($b) ?: strcmp($a, $b);
         });
         return $this->items;
+    }
+
+    public function flipLR(): array
+    {
+        $arr = [];
+        foreach ($this->items as $item) {
+            @list($k, $v) = explode(',', $item);
+            $arr[] = $v . ',' . $k;
+        }
+        return $arr;
     }
 }

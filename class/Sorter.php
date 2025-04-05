@@ -47,6 +47,10 @@ class Sorter
             case 'toKebabCase':
                 $output = $this->toKebabCase();
                 break;
+            case 'snakeCaseToString':
+                $output = $this->snakeCaseToString();
+                break;
+
             case 'random':
                 $output = $this->random();
                 break;
@@ -101,6 +105,17 @@ class Sorter
             if ($item) {
                 $item = preg_replace("/[\s_]+/", "-", $item);
                 $out[] = strtolower($item);
+            }
+        }
+        return $out;
+    }
+    public function snakeCaseToString(): array
+    {
+        $out = [];
+        foreach ($this->items as $k => $item) {
+            if ($item) {
+                $item = preg_replace("/[_]+/", " ", $item);
+                $out[] = ucfirst(strtolower($item));
             }
         }
         return $out;
